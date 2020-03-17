@@ -12,7 +12,7 @@
 	<artifactId>inventory-system</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>inventory-system</name>
-	<description>Demo project for Spring Boot</description>
+	<description>Inventory management system made with Spring Boot</description>
 
 	<properties>
 		<java.version>1.8</java.version>
@@ -53,7 +53,12 @@
 			<artifactId>spring-restdocs-mockmvc</artifactId>
 			<scope>test</scope>
 		</dependency>
-	</dependencies>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
 
 	<build>
 		<plugins>

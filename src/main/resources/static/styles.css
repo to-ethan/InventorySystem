@@ -1,0 +1,11 @@
+span.validationError {
+	color: red;
+}
+
+div.item {
+    height: 75px;
+    width: 500px;
+
+    background: rgb(148,148,148);
+    background: linear-gradient(0deg, rgba(148,148,148,1) 0%, rgba(213,213,213,1) 54%, rgba(143,143,143,1) 100%);
+}

@@ -1,0 +1,82 @@
+package io.github.toethan.inventorysystem.web;
+
+import io.github.toethan.inventorysystem.data.InventoryCreationDto;
+import io.github.toethan.inventorysystem.domain.Inventory;
+import io.github.toethan.inventorysystem.service.InventoryIdNotFoundException;
+import io.github.toethan.inventorysystem.service.InventoryService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.Errors;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import javax.validation.Valid;
+import java.util.List;
+
+@Controller
+@RequestMapping("/inventory")
+public class InventoryController {
+
+    private final InventoryService inventoryService;
+    private final static String INVENTORY_VIEW = "inventory";
+
+    @Autowired
+    public InventoryController(InventoryService inventoryService) {
+        this.inventoryService = inventoryService;
+    }
+
+    @GetMapping()
+    public String showAll(Model model) {
+        // TODO: DRY GET and POST methods
+        updateModel(model);
+        return INVENTORY_VIEW;
+    }
+
+    @PostMapping()
+    public String processForm(Model model, @Valid @ModelAttribute("newInventory") Inventory inventory, Errors errors) {
+        if (errors.hasErrors()) {
+            model.addAttribute("inventory", inventoryService.all());
+            return INVENTORY_VIEW;
+        }
+
+        inventoryService.add(inventory);
+        updateModel(model);
+        return INVENTORY_VIEW;
+    }
+
+    @GetMapping("/update")
+    public String showUpdateForm(Model model) {
+        List<Inventory> inventories = inventoryService.all();
+        InventoryCreationDto inventoriesForm = new InventoryCreationDto(inventories);
+
+        model.addAttribute("form", inventoriesForm);
+        return "inventory-update";
+    }
+
+    @PostMapping("/update")
+    public String updateInventory(Model model, @Valid @ModelAttribute("form") InventoryCreationDto form, Errors errors) {
+        if (errors.hasErrors()) {
+            model.addAttribute("form", form);
+            return "inventory-update";
+        }
+
+        form.getInventories().forEach((Inventory inventory) -> {
+            try {
+                inventoryService.update(inventory);
+            } catch (InventoryIdNotFoundException e) {
+                e.printStackTrace();
+            }
+        });
+
+        model.addAttribute("inventory", inventoryService.all());
+        return "redirect:/inventory";
+    }
+
+    private void updateModel(Model model) {
+        model.addAttribute("inventory", inventoryService.all());
+        model.addAttribute("newInventory", new Inventory());
+    }
+}

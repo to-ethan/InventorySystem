@@ -8,10 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -28,14 +25,14 @@ public class InventoryController {
         this.inventoryService = inventoryService;
     }
 
-    @GetMapping()
+    @GetMapping("/all")
     public String showAll(Model model) {
         // TODO: DRY GET and POST methods
         updateModel(model);
         return INVENTORY_VIEW;
     }
 
-    @PostMapping()
+    @PostMapping("/new")
     public String processForm(Model model, @Valid @ModelAttribute("newInventory") Inventory inventory, Errors errors) {
         if (errors.hasErrors()) {
             model.addAttribute("inventory", inventoryService.all());
@@ -56,6 +53,7 @@ public class InventoryController {
         return "inventory-update";
     }
 
+    // TODO: update validation on form parameters
     @PostMapping("/update")
     public String updateInventory(Model model, @Valid @ModelAttribute("form") InventoryCreationDto form, Errors errors) {
         if (errors.hasErrors()) {
@@ -72,7 +70,13 @@ public class InventoryController {
         });
 
         model.addAttribute("inventory", inventoryService.all());
-        return "redirect:/inventory";
+        return "redirect:/inventory/all";
+    }
+
+    @PostMapping("/delete/{id}")
+    public String deleteBuyer(@PathVariable Long id){
+        inventoryService.delete(id);
+        return "redirect:/inventory/all";
     }
 
     private void updateModel(Model model) {

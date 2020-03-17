@@ -10,7 +10,7 @@
 <body>
     <button onclick="location.href='../'" type="button">
         Back to Homepage</button>
-    <button onclick="location.href='inventory/update'" type="button">
+    <button onclick="location.href='./update'" type="button">
         Update</button>
     <div>
         <h2> Inventory </h2>
@@ -30,6 +30,14 @@
                     <td><span th:text="${inv.id}"> Id </span></td>
                     <td><span th:text="${inv.name}"> Name </span></td>
                     <td><span th:text="${inv.items}"> Items </span></td>
+                    <td>
+                        <form th:action="@{/inventory/delete/{id}(id=${inv.id})}" th:object="${inventory}" method="post">
+                            <input type="hidden" th:field="${inventory}"></input>
+                            <button type="submit" onClick="return confirm('Confirmation to delete inventory?')">
+                                Delete
+                            </button>
+                        </form>
+                    </td>
                 </tr>
             </tbody>
         </table>
@@ -37,7 +45,7 @@
 
     <div>
         <h2> New Inventory: </h2>
-        <form action="#" th:action="@{/inventory}" th:object="${newInventory}" method="post">
+        <form action="#" th:action="@{/inventory/new}" th:object="${newInventory}" method="post">
             <p>
                 Name: <input type="text" th:field="*{name}">
                 <span class="validationError"

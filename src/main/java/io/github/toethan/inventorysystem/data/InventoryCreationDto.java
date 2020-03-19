@@ -15,14 +15,14 @@ public class InventoryCreationDto {
     public InventoryCreationDto(List<Inventory> inventories) {
         this.inventories = inventories;
     }
-
-    public void addInventory(Inventory inventory) {
-        this.inventories.add(inventory);
-    }
-
-    public void setInventories(List<Inventory> inventories) {
-        this.inventories = inventories;
-    }
+//
+//    public void addInventory(Inventory inventory) {
+//        this.inventories.add(inventory);
+//    }
+//
+//    public void setInventories(List<Inventory> inventories) {
+//        this.inventories = inventories;
+//    }
 
     public List<Inventory> getInventories() {
         return inventories;

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Inventory</title>
+    <link rel="stylesheet" th:href="@{/styles.css}" />
+    <meta charset="UTF-8">
+</head>
+<body>
+    <button onclick="location.href='/inventory/all'" type="button">
+        Back to Inventory</button>
+
+    <div>
+        <h2> Inventory Items of
+            <span th:text="${inventoryToEdit.name}"> Inventory Name </span>
+        </h2>
+        <form action="#" th:action="@{/inventory/edit/{id}(id=${inventoryToEdit.id})}" th:object="${inventoryToEdit}"
+              method="post">
+            <!-- Fields to ensure that inventory attributes are saved in form submission -->
+            <input hidden th:field="*{id}" th:value="${inventoryToEdit.getId()}"/>
+            <input hidden th:field="*{name}" th:value="${inventoryToEdit.getName()}"/>
+            <fieldset>
+                <input type="submit" id="submitButton" th:value="Save">
+                <table>
+                    <thead>
+                    <tr>
+                        <th> ID </th>
+                        <th> Name </th>
+                        <th> Description </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="item, itemStat : ${inventoryToEdit.items}">
+                            <td>
+                                <span th:text="${item.id}"> Id </span>
+                                <input hidden th:name="|items[${itemStat.index}].id|" th:value="${item.getId()}"/>
+                            </td>
+                            <td>
+                                <input th:name="|items[${itemStat.index}].name|" th:value="${item.getName()}"/>
+                            </td>
+                            <td>
+                                <input th:name="|items[${itemStat.index}].description|" th:value="${item.getDescription()}"/>
+                            </td>
+                            <td>
+                                <!--<form th:action="@{/inventory/delete/{inventoryId}/item/{itemId}(inventoryId=${inventoryToEdit.id}, itemId=${item.id})}" th:object="${inventory}" method="post">-->
+                                    <!--<button type="submit" onClick="return confirm('Confirmation to delete item?')">-->
+                                        <!--Delete-->
+                                    <!--</button>-->
+                                <!--</form>-->
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </fieldset>
+        </form>
+    </div>
+</body>
+</html>

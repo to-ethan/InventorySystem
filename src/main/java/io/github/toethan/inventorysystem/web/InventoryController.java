@@ -2,6 +2,7 @@ package io.github.toethan.inventorysystem.web;
 
 import io.github.toethan.inventorysystem.data.InventoryCreationDto;
 import io.github.toethan.inventorysystem.domain.Inventory;
+import io.github.toethan.inventorysystem.domain.Item;
 import io.github.toethan.inventorysystem.service.InventoryIdNotFoundException;
 import io.github.toethan.inventorysystem.service.InventoryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -76,6 +77,41 @@ public class InventoryController {
     @PostMapping("/delete/{id}")
     public String deleteBuyer(@PathVariable Long id){
         inventoryService.delete(id);
+        return "redirect:/inventory/all";
+    }
+
+    @GetMapping("/edit/{id}")
+    public String showInventory(Model model, @PathVariable Long id) {
+        try {
+            model.addAttribute("inventoryToEdit", inventoryService.get(id));
+            System.out.println(inventoryService.get(id).getId());
+            System.out.println(inventoryService.get(id).getName());
+            System.out.println(inventoryService.get(id).getItems());
+        } catch (InventoryIdNotFoundException e) {
+            // TODO: Show error message on UI
+            e.printStackTrace();
+            return "redirect:/inventory/all";
+        }
+
+        return "inventory-edit";
+    }
+
+    @PostMapping("/edit/{id}")
+    public String editInventory(Model model, @Valid @ModelAttribute("inventoryToEdit") Inventory inventory, Errors errors) {
+        if (errors.hasErrors()) {
+            System.out.println(errors.toString());
+            model.addAttribute("inventoryToEdit", inventory);
+            return "inventory-edit";
+        }
+
+        try {
+            inventoryService.update(inventory);
+        } catch (InventoryIdNotFoundException e) {
+            // TODO: show error on page
+            e.printStackTrace();
+            return "inventory-edit";
+        }
+        model.addAttribute("inventory", inventoryService.all());
         return "redirect:/inventory/all";
     }
 

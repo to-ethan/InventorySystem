@@ -27,16 +27,26 @@
                     <td colspan="3"> Inventory Empty </td>
                 </tr>
                 <tr th:each="inv : ${inventory}">
+
                     <td><span th:text="${inv.id}"> Id </span></td>
                     <td><span th:text="${inv.name}"> Name </span></td>
                     <td><span th:text="${inv.items}"> Items </span></td>
                     <td>
                         <form th:action="@{/inventory/delete/{id}(id=${inv.id})}" th:object="${inventory}" method="post">
-                            <input type="hidden" th:field="${inventory}"></input>
                             <button type="submit" onClick="return confirm('Confirmation to delete inventory?')">
                                 Delete
                             </button>
                         </form>
+                        <form th:action="@{../inventory/edit/{id}(id=${inv.id})}" method="get">
+                            <input type="submit" value="Edit" />
+                        </form>
+                        <!--<button th:href="@{../inventory/edit/{id}(id=${inv.id})}">Edit</button>-->
+
+                        <!--<button onclick="location.href='../inventory/edit/{id}(id=${inv.id})}'" type="button">-->
+                            <!--Edit Inventory</button>-->
+                        <!--<form th:action="@{/inventory/edit/{id}(id=${inv.id})}" th:object="${inventory}" method="post">-->
+                            <!--<button type="submit"> Edit Inventory</button>-->
+                        <!--</form>-->
                     </td>
                 </tr>
             </tbody>

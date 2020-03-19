@@ -13,9 +13,10 @@ public class Item {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private final String name;
+    // TODO: possibly change name and description back to final fields after creating form object to hold form data
+    private String name;
 
-    private final String description;
+    private String description;
 
     public Item() {
         this.name = "";
@@ -37,6 +38,19 @@ public class Item {
 
     public String getDescription() {
         return description;
+    }
+
+    // TODO: temporary fix for object creation from form - id should not be changed otherwise
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     @Override

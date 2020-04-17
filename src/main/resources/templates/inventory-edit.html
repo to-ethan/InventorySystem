@@ -28,10 +28,14 @@
                         <th> ID </th>
                         <th> Name </th>
                         <th> Description </th>
+                        <th> Quantity </th>
+                        <th> Price ($) </th>
                     </tr>
                     </thead>
                     <tbody>
                         <tr th:each="item, itemStat : ${inventoryToEdit.items}">
+                            <form th:action="@{/inventory/edit/{id}/delete(id=${inventoryToEdit.id})}"
+                                  th:object="${item}" method="post">
                             <td>
                                 <span th:text="${item.id}"> Id </span>
                                 <input hidden th:name="|items[${itemStat.index}].id|" th:value="${item.getId()}"/>
@@ -43,16 +47,62 @@
                                 <input th:name="|items[${itemStat.index}].description|" th:value="${item.getDescription()}"/>
                             </td>
                             <td>
-                                <!--<form th:action="@{/inventory/delete/{inventoryId}/item/{itemId}(inventoryId=${inventoryToEdit.id}, itemId=${item.id})}" th:object="${inventory}" method="post">-->
-                                    <!--<button type="submit" onClick="return confirm('Confirmation to delete item?')">-->
-                                        <!--Delete-->
-                                    <!--</button>-->
-                                <!--</form>-->
+                                <input th:name="|items[${itemStat.index}].quantity|" th:value="${item.getQuantity()}"/>
                             </td>
+                            <td>
+                                <input th:name="|items[${itemStat.index}].price|" th:value="${item.getPrice()}"/>
+                            </td>
+                            <td>
+                                <button type="submit" onClick="return confirm('Confirmation to delete this item?')">
+                                    Delete
+                                </button>
+                            </td>
+                            </form>
                         </tr>
                     </tbody>
                 </table>
             </fieldset>
+        </form>
+    </div>
+    <div>
+        <h2> New Item: </h2>
+        <form action="#" th:action="@{/inventory/edit/{id}/new(id=${inventoryToEdit.id})}" th:object="${newItem}" method="post">
+            <p>
+                Name: <input type="text" th:field="*{name}">
+                <span class="validationError"
+                      th:if="${#fields.hasErrors('name')}"
+                      th:errors="*{name}">Name Error</span>
+                <br/>
+            </p>
+            <p>
+                Description: <input type="text" th:field="*{description}">
+                <span class="validationError"
+                      th:if="${#fields.hasErrors('name')}"
+                      th:errors="*{description}">Name Error</span>
+                <br/>
+            </p>
+            <p>
+                Quantity: <input type="text" th:field="*{quantity}">
+                <span class="validationError"
+                      th:if="${#fields.hasErrors('quantity')}"
+                      th:errors="*{description}">Quantity Error</span>
+                <br/>
+            </p>
+            <p>
+                Price: <input type="text" th:field="*{price}">
+                <span class="validationError"
+                      th:if="${#fields.hasErrors('price')}"
+                      th:errors="*{description}">Price Error</span>
+                <br/>
+            </p>
+            <div th:if="${#fields.hasErrors()}">
+                <span class="validationError">
+                    Please correct the problems above and resubmit.
+                </span>
+            </div>
+            <p>
+                <input type="submit" value="Submit"/> <input type="reset" value="Reset">
+            </p>
         </form>
     </div>
 </body>

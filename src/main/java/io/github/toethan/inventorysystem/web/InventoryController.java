@@ -92,6 +92,7 @@ public class InventoryController {
             e.printStackTrace();
             return "redirect:/inventory/all";
         }
+        model.addAttribute("newItem", new Item());
 
         return "inventory-edit";
     }
@@ -101,6 +102,7 @@ public class InventoryController {
         if (errors.hasErrors()) {
             System.out.println(errors.toString());
             model.addAttribute("inventoryToEdit", inventory);
+            model.addAttribute("newItem", new Item());
             return "inventory-edit";
         }
 
@@ -113,6 +115,57 @@ public class InventoryController {
         }
         model.addAttribute("inventory", inventoryService.all());
         return "redirect:/inventory/all";
+    }
+
+    @PostMapping("/edit/{id}/new")
+    public String newInventoryItem(Model model, @PathVariable Long id,
+                                   @Valid @ModelAttribute("newItem") Item item, Errors errors) {
+        if (errors.hasErrors()) {
+            // TODO: Add valid parameters to the domain class of Item.
+            model.addAttribute("newItem", item);
+            return "inventory-edit";
+        }
+
+        try {
+            Inventory inventory = inventoryService.get(id);
+            // Temporary fix because model attribute "newItem" does not generate the correct ID.
+            Item newItem = new Item(item.getName(), item.getDescription(), item.getQuantity(), item.getPrice());
+            inventory.getItems().add(newItem);
+            inventoryService.update(inventory);
+        } catch (InventoryIdNotFoundException e) {
+            // TODO: show error on page
+            e.printStackTrace();
+            return "inventory-edit";
+        }
+        model.addAttribute("inventory", inventoryService.all());
+        return "redirect:/inventory/all";
+    }
+
+    @PostMapping("/edit/{id}/delete")
+    public String deleteInventoryItem(Model model, @PathVariable Long id,
+                                   Item item, Errors errors) {
+        if (errors.hasErrors()) {
+            return "inventory-edit";
+        }
+
+        try {
+            // /edit/{id}/delete/{id}
+            // TODO: remove item with id matching from inventory.
+
+            Inventory inventory = inventoryService.get(id);
+
+            List<Item> items = inventory.getItems();
+
+            items.removeIf(x -> x.equals(item));
+
+            inventoryService.update(inventory);
+        } catch (InventoryIdNotFoundException e) {
+            // TODO: show error on page
+            e.printStackTrace();
+            return "inventory-edit";
+        }
+        model.addAttribute("newItem", new Item());
+        return "inventory-edit";
     }
 
     private void updateModel(Model model) {

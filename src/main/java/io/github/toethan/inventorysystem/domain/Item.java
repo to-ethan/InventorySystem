@@ -4,6 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import java.util.Currency;
 import java.util.Objects;
 
 @Entity
@@ -18,14 +19,22 @@ public class Item {
 
     private String description;
 
+    private int quantity;
+
+    private Double price;
+
     public Item() {
         this.name = "";
         this.description = "";
+        this.quantity = 0;
+        this.price = (double) 0;
     }
 
-    public Item(String name, String description) {
+    public Item(String name, String description, int quantity, Double price) {
         this.name = name;
         this.description = description;
+        this.quantity = quantity;
+        this.price = price;
     }
 
     public Long getId() {
@@ -38,6 +47,22 @@ public class Item {
 
     public String getDescription() {
         return description;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
+    public Double getPrice() {
+        return price;
+    }
+
+    public void setPrice(Double price) {
+        this.price = price;
     }
 
     // TODO: temporary fix for object creation from form - id should not be changed otherwise

@@ -31,8 +31,8 @@ public class InventoryTest {
     public void setAndGetItemTest() {
         assertEquals(inventory.getItems().size(), 0);
         List<Item> expected = new ArrayList<Item>();
-        expected.add(new Item("1", "2"));
-        expected.add(new Item("3", "4"));
+        expected.add(new Item("1", "2", 1, (double) 1.00));
+        expected.add(new Item("3", "4", 1, (double) 1.00));
         inventory.setItems(expected);
 
         assertEquals(expected, inventory.getItems());
@@ -44,7 +44,7 @@ public class InventoryTest {
         assertEquals(inventory.getItems().size(), 0);
 
         List<Item> expected = new ArrayList<Item>();
-        Item expectedItem = new Item("1", "2");
+        Item expectedItem = new Item("1", "2", 1, (double) 1.00);
 
         expected.add(expectedItem);
         inventory.addItem(expectedItem);
@@ -59,8 +59,8 @@ public class InventoryTest {
 
         List<Item> expected = new ArrayList<Item>();
 
-        expected.add(new Item("1", "2"));
-        expected.add(new Item("3", "4"));
+        expected.add(new Item("1", "2", 1, (double) 1.00));
+        expected.add(new Item("3", "4", 1, (double) 1.00));
         inventory.addItems(expected);
 
         assertEquals(expected, inventory.getItems());

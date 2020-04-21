@@ -34,8 +34,8 @@
                     </thead>
                     <tbody>
                         <tr th:each="item, itemStat : ${inventoryToEdit.items}">
-                            <form th:action="@{/inventory/edit/{id}/delete(id=${inventoryToEdit.id})}"
-                                  th:object="${item}" method="post">
+                            <form th:action="@{/inventory/edit/{id}/delete/{itemId}(id=${inventoryToEdit.id},itemId=${item.id})}"
+                                  method="post">
                             <td>
                                 <span th:text="${item.id}"> Id </span>
                                 <input hidden th:name="|items[${itemStat.index}].id|" th:value="${item.getId()}"/>

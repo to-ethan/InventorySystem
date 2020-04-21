@@ -8,6 +8,7 @@ import io.github.toethan.inventorysystem.service.InventoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
@@ -141,23 +142,20 @@ public class InventoryController {
         return "redirect:/inventory/all";
     }
 
-    @PostMapping("/edit/{id}/delete")
+    @PostMapping("/edit/{id}/delete/{itemId}")
     public String deleteInventoryItem(Model model, @PathVariable Long id,
-                                   Item item, Errors errors) {
+                                      @PathVariable Long itemId, Errors errors, BindingResult results) {
+        /*
         if (errors.hasErrors()) {
             return "inventory-edit";
         }
-
+        */
         try {
             // /edit/{id}/delete/{id}
             // TODO: remove item with id matching from inventory.
-
             Inventory inventory = inventoryService.get(id);
-
             List<Item> items = inventory.getItems();
-
-            items.removeIf(x -> x.equals(item));
-
+            items.removeIf(x -> x.getId().equals(itemId));
             inventoryService.update(inventory);
         } catch (InventoryIdNotFoundException e) {
             // TODO: show error on page

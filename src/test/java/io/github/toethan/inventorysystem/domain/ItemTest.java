@@ -37,16 +37,18 @@ public class ItemTest {
     }
 
     @Test
-    public void toStringEqualsName() {
-        Item newItem = new Item("name", "", 0, (double) 0);
-        Assert.assertEquals(newItem.getName(), newItem.toString());
-    }
-
-    @Test
     public void testConstructor() {
         final Constructor<?>[] constructors = Item.class.getDeclaredConstructors();
         for (Constructor<?> constructor : constructors) {
             Assert.assertTrue(Modifier.isPublic(constructor.getModifiers()));
         }
+    }
+
+    @Test
+    public void testToStringOutput() {
+        String expectedString = "$1.55 Apple (1)";
+        Item apple = new Item("Apple", "", 1, 1.55);
+
+        Assert.assertEquals(apple.toString(), expectedString);
     }
 }

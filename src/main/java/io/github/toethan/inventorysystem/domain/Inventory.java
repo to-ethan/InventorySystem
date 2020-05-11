@@ -5,6 +5,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 public class Inventory {
@@ -76,4 +77,18 @@ public class Inventory {
         items.add(item);
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Inventory)) return false;
+        Inventory inventory = (Inventory) o;
+        return Objects.equals(id, inventory.id) &&
+                Objects.equals(name, inventory.name) &&
+                Objects.equals(items, inventory.items);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, items);
+    }
 }

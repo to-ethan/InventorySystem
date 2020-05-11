@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/inventory")
@@ -21,6 +22,9 @@ public class InventoryController {
 
     private final InventoryService inventoryService;
     private final static String INVENTORY_VIEW = "inventory";
+    private final static String INVENTORY_EDIT_VIEW = "inventory-edit";
+    private final static String INVENTORY_UPDATE_VIEW = "inventory-update";
+    private final static String NEW_ITEM = "newItem";
 
     @Autowired
     public InventoryController(InventoryService inventoryService) {
@@ -52,16 +56,22 @@ public class InventoryController {
         InventoryCreationDto inventoriesForm = new InventoryCreationDto(inventories);
 
         model.addAttribute("form", inventoriesForm);
-        return "inventory-update";
+        return INVENTORY_UPDATE_VIEW;
     }
 
     // TODO: update validation on form parameters
     @PostMapping("/update")
-    public String updateInventory(Model model, @Valid @ModelAttribute("form") InventoryCreationDto form, Errors errors) {
+    public String updateInventory(Model model, @Valid @ModelAttribute("form") InventoryCreationDto form, Errors errors,
+                                  @RequestParam Map<String,String> allRequestParams) {
         if (errors.hasErrors()) {
             model.addAttribute("form", form);
-            return "inventory-update";
+            return INVENTORY_UPDATE_VIEW;
         }
+
+        System.out.println(allRequestParams.keySet());
+        System.out.println(allRequestParams);
+        System.out.println(allRequestParams.values());
+        System.out.println(form.toString());
 
         form.getInventories().forEach((Inventory inventory) -> {
             try {
@@ -88,14 +98,14 @@ public class InventoryController {
             System.out.println(inventoryService.get(id).getId());
             System.out.println(inventoryService.get(id).getName());
             System.out.println(inventoryService.get(id).getItems());
-        } catch (InventoryIdNotFoundException e) {
+        } catch (Exception e) {
             // TODO: Show error message on UI
             e.printStackTrace();
             return "redirect:/inventory/all";
         }
-        model.addAttribute("newItem", new Item());
+        model.addAttribute(NEW_ITEM, new Item());
 
-        return "inventory-edit";
+        return INVENTORY_EDIT_VIEW;
     }
 
     @PostMapping("/edit/{id}")
@@ -103,16 +113,15 @@ public class InventoryController {
         if (errors.hasErrors()) {
             System.out.println(errors.toString());
             model.addAttribute("inventoryToEdit", inventory);
-            model.addAttribute("newItem", new Item());
-            return "inventory-edit";
+            model.addAttribute(NEW_ITEM, new Item());
+            return INVENTORY_EDIT_VIEW;
         }
 
         try {
             inventoryService.update(inventory);
         } catch (InventoryIdNotFoundException e) {
-            // TODO: show error on page
             e.printStackTrace();
-            return "inventory-edit";
+            return INVENTORY_EDIT_VIEW;
         }
         model.addAttribute("inventory", inventoryService.all());
         return "redirect:/inventory/all";
@@ -120,23 +129,23 @@ public class InventoryController {
 
     @PostMapping("/edit/{id}/new")
     public String newInventoryItem(Model model, @PathVariable Long id,
-                                   @Valid @ModelAttribute("newItem") Item item, Errors errors) {
+                                   @Valid @ModelAttribute(NEW_ITEM) Item item, Errors errors) {
         if (errors.hasErrors()) {
             // TODO: Add valid parameters to the domain class of Item.
-            model.addAttribute("newItem", item);
-            return "inventory-edit";
+            model.addAttribute(NEW_ITEM, item);
+            return INVENTORY_EDIT_VIEW;
         }
 
         try {
             Inventory inventory = inventoryService.get(id);
-            // Temporary fix because model attribute "newItem" does not generate the correct ID.
+            // Temporary fix because model attribute NEW_ITEM does not generate the correct ID.
             Item newItem = new Item(item.getName(), item.getDescription(), item.getQuantity(), item.getPrice());
             inventory.getItems().add(newItem);
             inventoryService.update(inventory);
         } catch (InventoryIdNotFoundException e) {
             // TODO: show error on page
             e.printStackTrace();
-            return "inventory-edit";
+            return INVENTORY_EDIT_VIEW;
         }
         model.addAttribute("inventory", inventoryService.all());
         return "redirect:/inventory/all";
@@ -147,7 +156,7 @@ public class InventoryController {
                                       @PathVariable Long itemId, Errors errors, BindingResult results) {
         /*
         if (errors.hasErrors()) {
-            return "inventory-edit";
+            return INVENTORY_EDIT_VIEW;
         }
         */
         try {
@@ -160,10 +169,10 @@ public class InventoryController {
         } catch (InventoryIdNotFoundException e) {
             // TODO: show error on page
             e.printStackTrace();
-            return "inventory-edit";
+            return INVENTORY_EDIT_VIEW;
         }
-        model.addAttribute("newItem", new Item());
-        return "inventory-edit";
+        model.addAttribute(NEW_ITEM, new Item());
+        return INVENTORY_EDIT_VIEW;
     }
 
     private void updateModel(Model model) {

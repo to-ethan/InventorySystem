@@ -4,7 +4,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import java.text.NumberFormat;
 import java.util.Currency;
+import java.util.Locale;
 import java.util.Objects;
 
 @Entity
@@ -94,6 +96,10 @@ public class Item {
 
     @Override
     public String toString() {
-        return this.name;
+        return NumberFormat.getCurrencyInstance(new Locale("en", "US"))
+                .format(this.price)
+                + " "
+                + this.name
+                + " (" + this.quantity + ")";
     }
 }

@@ -1,4 +1,4 @@
-package io.github.toethan.inventorysystem.web;
+package io.github.toethan.inventorysystem.config;
 
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Configuration;

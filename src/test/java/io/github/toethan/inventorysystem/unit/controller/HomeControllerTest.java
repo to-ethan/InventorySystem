@@ -1,4 +1,4 @@
-package io.github.toethan.inventorysystem.controller;
+package io.github.toethan.inventorysystem.unit.controller;
 
 import io.github.toethan.inventorysystem.web.HomeController;
 import org.junit.jupiter.api.Test;

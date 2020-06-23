@@ -1,4 +1,4 @@
-package io.github.toethan.inventorysystem.controller;
+package io.github.toethan.inventorysystem.unit.controller;
 
 import io.github.toethan.inventorysystem.data.InventoryCreationDto;
 import io.github.toethan.inventorysystem.domain.Inventory;
@@ -88,28 +88,6 @@ public class InventoryControllerTest {
                 .andExpect(model().attribute("form", equalTo(inventoriesForm)));
     }
 
-    /*
-    @Test
-    void getSpecificInventoryNotFound() throws Exception {
-        Long id = 51L;
-        Inventory expectedInventory = new Inventory(null, "test", Arrays.asList());
-        when(inventoryServiceMock.get(id)).thenThrow(InventoryIdNotFoundException.class);
-
-        List<Inventory> inventories = inventoryServiceMock.all();
-        InventoryCreationDto inventoriesForm = new InventoryCreationDto(inventories);
-
-        RequestBuilder request = get("/edit/{id}", id);
-
-        // TODO: Why is the URL not redirected?
-        this.mockMvc.perform(request)
-                .andDo(print())
-                .andExpect(status().is4xxClientError())
-                .andExpect(redirectedUrl("/inventory/all"));
-
-    }
-    */
-
-
     @Test
     void postRequestForNew() throws Exception {
         Inventory expectedInventory = new Inventory(null, "test", Arrays.asList());
@@ -151,6 +129,27 @@ public class InventoryControllerTest {
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("/inventory/all"));
     }
+
+    /*
+    @Test
+    void getSpecificInventoryNotFound() throws Exception {
+        Long id = 51L;
+        Inventory expectedInventory = new Inventory(null, "test", Arrays.asList());
+        when(inventoryServiceMock.get(id)).thenThrow(InventoryIdNotFoundException.class);
+
+        List<Inventory> inventories = inventoryServiceMock.all();
+        InventoryCreationDto inventoriesForm = new InventoryCreationDto(inventories);
+
+        RequestBuilder request = get("/edit/{id}", id);
+
+        // TODO: Why is the URL not redirected?
+        this.mockMvc.perform(request)
+                .andDo(print())
+                .andExpect(status().is4xxClientError())
+                .andExpect(redirectedUrl("/inventory/all"));
+
+    }
+    */
 
     // TODO: Temporary helper function to build forms
     private String buildUrlEncodedFormEntity(String... params) {

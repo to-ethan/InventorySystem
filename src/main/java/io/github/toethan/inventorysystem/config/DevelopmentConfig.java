@@ -1,4 +1,4 @@
-package io.github.toethan.inventorysystem.web;
+package io.github.toethan.inventorysystem.config;
 
 import io.github.toethan.inventorysystem.data.InventoryRepository;
 import io.github.toethan.inventorysystem.domain.Inventory;

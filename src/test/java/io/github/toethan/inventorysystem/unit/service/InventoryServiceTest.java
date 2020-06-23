@@ -1,7 +1,9 @@
-package io.github.toethan.inventorysystem.service;
+package io.github.toethan.inventorysystem.unit.service;
 
 import io.github.toethan.inventorysystem.data.InventoryRepository;
 import io.github.toethan.inventorysystem.domain.Inventory;
+import io.github.toethan.inventorysystem.service.InventoryIdNotFoundException;
+import io.github.toethan.inventorysystem.service.InventoryService;
 import org.junit.Before;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

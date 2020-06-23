@@ -1,5 +1,6 @@
-package io.github.toethan.inventorysystem.domain;
+package io.github.toethan.inventorysystem.unit.domain;
 
+import io.github.toethan.inventorysystem.domain.Item;
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 

@@ -1,4 +1,4 @@
-package io.github.toethan.inventorysystem;
+package io.github.toethan.inventorysystem.unit;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

@@ -1,5 +1,7 @@
-package io.github.toethan.inventorysystem.domain;
+package io.github.toethan.inventorysystem.unit.domain;
 
+import io.github.toethan.inventorysystem.domain.Inventory;
+import io.github.toethan.inventorysystem.domain.Item;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

@@ -1,16 +1,11 @@
 package io.github.toethan.inventorysystem.endtoend;
 
+import io.github.toethan.inventorysystem.endtoend.pages.BasePage;
+import org.springframework.stereotype.Component;
+
+@Component
 public class User {
-
-    public void opens(WebPage webPage) {
-        webPage.open();
-    }
-
-    public void closes(WebPage webPage) {
-        webPage.close();
-    }
-
-    public void navigatesToHomePage() {
-
+    public void isCurrentlyOn(BasePage page) {
+        page.isBeingViewed();
     }
 }

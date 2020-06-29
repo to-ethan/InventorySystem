@@ -7,8 +7,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @Component
 public class InventoryAdminPage extends BasePage {
 
-    @Override
-    public void isBeingViewed() {
-        assertEquals("Inventory", driver.getTitle());
-    }
+  @Override
+  public void isBeingViewed() {
+    assertEquals("Inventory", driver.getTitle());
+  }
 }

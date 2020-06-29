@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class User {
-    public void isCurrentlyOn(BasePage page) {
-        page.isBeingViewed();
-    }
+  public void isCurrentlyOn(BasePage page) {
+    page.isBeingViewed();
+  }
 }

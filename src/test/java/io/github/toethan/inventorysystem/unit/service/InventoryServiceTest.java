@@ -24,75 +24,69 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 public class InventoryServiceTest {
 
-    @Mock
-    private InventoryRepository inventoryRepository;
+  @Mock private InventoryRepository inventoryRepository;
 
-    @InjectMocks
-    private InventoryService inventoryService;
+  @InjectMocks private InventoryService inventoryService;
 
-    @Before
-    void init() {
-        inventoryService = new InventoryService(inventoryRepository);
-    }
+  @Before
+  void init() {
+    inventoryService = new InventoryService(inventoryRepository);
+  }
 
-    @Test
-    public void whenAddingInventoryShouldReturnInventory() {
-        when(inventoryRepository.save(any(Inventory.class))).thenReturn(new Inventory());
+  @Test
+  public void whenAddingInventoryShouldReturnInventory() {
+    when(inventoryRepository.save(any(Inventory.class))).thenReturn(new Inventory());
 
-        Inventory addedInventory = inventoryService.add(new Inventory());
+    Inventory addedInventory = inventoryService.add(new Inventory());
 
-        assertEquals(new Inventory(), addedInventory);
-    }
+    assertEquals(new Inventory(), addedInventory);
+  }
 
-    @Test
-    public void getAllInventory() {
-        when(inventoryRepository.findAll())
-                .thenReturn(Arrays.asList(new Inventory(0L, "1"), new Inventory(1L, "2")));
+  @Test
+  public void getAllInventory() {
+    when(inventoryRepository.findAll())
+        .thenReturn(Arrays.asList(new Inventory(0L, "1"), new Inventory(1L, "2")));
 
-        List<Inventory> inventories = inventoryService.all();
+    List<Inventory> inventories = inventoryService.all();
 
-        assertEquals(Arrays.asList(
-                        new Inventory(0L, "1"),
-                        new Inventory(1L, "2")
-        ), inventories);
+    assertEquals(Arrays.asList(new Inventory(0L, "1"), new Inventory(1L, "2")), inventories);
+  }
 
-    }
+  @Test
+  public void updateValidInventory() throws InventoryIdNotFoundException {
+    Long id = 0L;
+    Inventory oldInventory = new Inventory(id, "old name");
+    Inventory expectedInventory = new Inventory(id, "new name");
 
-    @Test
-    public void updateValidInventory() throws InventoryIdNotFoundException {
-        Long id = 0L;
-        Inventory oldInventory = new Inventory(id, "old name");
-        Inventory expectedInventory = new Inventory(id, "new name");
+    inventoryService = mock(InventoryService.class);
 
-        inventoryService = mock(InventoryService.class);
+    doReturn(expectedInventory).when(inventoryService).update(any(Inventory.class));
 
-        doReturn(expectedInventory).when(inventoryService).update(any(Inventory.class));
+    Inventory updated = inventoryService.update(expectedInventory);
 
-        Inventory updated = inventoryService.update(expectedInventory);
+    assertThat(updated).isNotNull();
+    assertEquals(expectedInventory.getId(), updated.getId());
+    assertEquals(expectedInventory.getName(), updated.getName());
+    assertEquals(Collections.emptyList(), updated.getItems());
+  }
 
-        assertThat(updated).isNotNull();
-        assertEquals(expectedInventory.getId(), updated.getId());
-        assertEquals(expectedInventory.getName(), updated.getName());
-        assertEquals(Collections.emptyList(), updated.getItems());
-    }
+  @Test
+  public void inventoryIdNotFoundException() {
+    Long id = 0L;
+    Exception exception =
+        assertThrows(InventoryIdNotFoundException.class, () -> inventoryService.get(id));
+  }
 
-    @Test
-    public void inventoryIdNotFoundException() {
-        Long id = 0L;
-        Exception exception = assertThrows(InventoryIdNotFoundException.class, () ->
-                inventoryService.get(id));
-    }
+  @Test
+  public void whenDeletingInventoryShouldRemoveInventory() throws InventoryIdNotFoundException {
+    Long id = 0L;
+    Inventory inventory = new Inventory(id, "test");
 
-    @Test
-    public void whenDeletingInventoryShouldRemoveInventory() throws InventoryIdNotFoundException {
-        Long id = 0L;
-        Inventory inventory = new Inventory(id, "test");
+    inventoryService.add(inventory);
 
-        inventoryService.add(inventory);
+    inventoryService.delete(id);
 
-        inventoryService.delete(id);
-
-        verify(inventoryRepository, times(1)).deleteById(id);
-        assertEquals(Collections.emptyList(), inventoryService.all());
-    }
+    verify(inventoryRepository, times(1)).deleteById(id);
+    assertEquals(Collections.emptyList(), inventoryService.all());
+  }
 }

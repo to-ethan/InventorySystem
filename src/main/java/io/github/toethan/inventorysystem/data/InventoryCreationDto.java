@@ -7,38 +7,30 @@ import java.util.List;
 import java.util.Objects;
 
 public class InventoryCreationDto {
-    private List<Inventory> inventories;
+  private List<Inventory> inventories;
 
-    public InventoryCreationDto() {
-        inventories = new ArrayList<>();
-    }
+  public InventoryCreationDto() {
+    inventories = new ArrayList<>();
+  }
 
-    public InventoryCreationDto(List<Inventory> inventories) {
-        this.inventories = inventories;
-    }
-//
-//    public void addInventory(Inventory inventory) {
-//        this.inventories.add(inventory);
-//    }
-//
-//    public void setInventories(List<Inventory> inventories) {
-//        this.inventories = inventories;
-//    }
+  public InventoryCreationDto(List<Inventory> inventories) {
+    this.inventories = inventories;
+  }
 
-    public List<Inventory> getInventories() {
-        return inventories;
-    }
+  public List<Inventory> getInventories() {
+    return inventories;
+  }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof InventoryCreationDto)) return false;
-        InventoryCreationDto that = (InventoryCreationDto) o;
-        return Objects.equals(inventories, that.inventories);
-    }
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (!(o instanceof InventoryCreationDto)) return false;
+    InventoryCreationDto that = (InventoryCreationDto) o;
+    return Objects.equals(inventories, that.inventories);
+  }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(inventories);
-    }
+  @Override
+  public int hashCode() {
+    return Objects.hash(inventories);
+  }
 }

@@ -1,8 +1,8 @@
-package io.github.toethan.inventorysystem.endtoend;
+package io.github.toethan.inventorysystem.e2e;
 
 import io.github.toethan.inventorysystem.InventorySystemApplication;
-import io.github.toethan.inventorysystem.endtoend.pages.HomePage;
-import io.github.toethan.inventorysystem.endtoend.pages.InventoryAdminPage;
+import io.github.toethan.inventorysystem.e2e.pages.HomePage;
+import io.github.toethan.inventorysystem.e2e.pages.InventoryAdminPage;
 import org.junit.AfterClass;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

@@ -1,4 +1,4 @@
-package io.github.toethan.inventorysystem.endtoend.pages;
+package io.github.toethan.inventorysystem.e2e.pages;
 
 import org.openqa.selenium.WebDriver;
 import org.springframework.beans.factory.annotation.Autowired;

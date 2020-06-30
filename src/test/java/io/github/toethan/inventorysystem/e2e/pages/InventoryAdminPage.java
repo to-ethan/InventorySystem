@@ -1,4 +1,4 @@
-package io.github.toethan.inventorysystem.endtoend.pages;
+package io.github.toethan.inventorysystem.e2e.pages;
 
 import org.springframework.stereotype.Component;
 

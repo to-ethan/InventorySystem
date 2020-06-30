@@ -1,4 +1,4 @@
-package io.github.toethan.inventorysystem.endtoend.pages;
+package io.github.toethan.inventorysystem.e2e.pages;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.support.ui.WebDriverWait;

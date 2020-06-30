@@ -1,4 +1,4 @@
-package io.github.toethan.inventorysystem.endtoend;
+package io.github.toethan.inventorysystem.e2e;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;

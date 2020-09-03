@@ -15,8 +15,6 @@ public class Item {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  // TODO: possibly change name and description back to final fields after creating form object to
-  // hold form data
   private String name;
 
   private String description;
@@ -25,11 +23,12 @@ public class Item {
 
   private Double price;
 
-  public Item() {
-    this.name = "";
-    this.description = "";
-    this.quantity = 0;
-    this.price = (double) 0;
+  public Item(Long id, String name, String description, int quantity, Double price) {
+    this.id = id;
+    this.name = name;
+    this.description = description;
+    this.quantity = quantity;
+    this.price = price;
   }
 
   public Item(String name, String description, int quantity, Double price) {
@@ -37,6 +36,13 @@ public class Item {
     this.description = description;
     this.quantity = quantity;
     this.price = price;
+  }
+
+  public Item() {
+    this.name = "";
+    this.description = "";
+    this.quantity = 0;
+    this.price = (double) 0;
   }
 
   public Long getId() {

@@ -31,10 +31,10 @@ public class InventoryService {
     repository.deleteById(id);
   }
 
-  public Inventory update(Inventory inventory) throws InventoryIdNotFoundException {
-    Inventory inventoryFromDb = get(inventory.getId());
-    inventoryFromDb.setName(inventory.getName());
-    inventoryFromDb.setItems(inventory.getItems());
-    return repository.save(inventoryFromDb);
+  public Inventory update(Inventory updated) throws InventoryIdNotFoundException {
+    Inventory inventory = get(updated.getId());
+    inventory.setName(updated.getName());
+    inventory.setItems(updated.getItems());
+    return repository.save(inventory);
   }
 }

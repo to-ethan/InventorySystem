@@ -63,6 +63,7 @@ public class InventoryTest {
 
     expected.add(new Item("1", "2", 1, (double) 1.00));
     expected.add(new Item("3", "4", 1, (double) 1.00));
+
     inventory.addItems(expected);
 
     assertEquals(expected, inventory.getItems());
@@ -75,5 +76,36 @@ public class InventoryTest {
     for (Constructor<?> constructor : constructors) {
       assertTrue(Modifier.isPublic(constructor.getModifiers()));
     }
+  }
+
+  @Test
+  public void deleteItemFromInventoryById() {
+    List<Item> expected = new ArrayList<Item>();
+    expected.add(new Item(0L,"1", "", 1, (double) 1.00));
+    expected.add(new Item(1L,"2", "", 1, (double) 1.00));
+
+    assertEquals(inventory.getItems().size(), 0);
+    inventory.addItem(new Item(0L,"1", "", 1, (double) 1.00));
+    inventory.addItem(new Item(1L,"2", "", 1, (double) 1.00));
+    inventory.addItem(new Item(2L,"3", "", 1, (double) 1.00));
+
+    inventory.deleteItemById(1L);
+
+    assertEquals(expected, inventory.getItems());
+    assertEquals(2, inventory.getItems().size());
+  }
+
+  @Test
+  public void deleteLastItemOfListById() {
+    List<Item> expected = new ArrayList<Item>();
+
+    assertEquals(inventory.getItems().size(), 0);
+    inventory.addItem(new Item(1L,"2", "", 1, (double) 1.00));
+
+    inventory.deleteItemById(1L);
+
+    assertEquals(expected, inventory.getItems());
+    assertEquals(0, inventory.getItems().size());
+    assertEquals(true, inventory.getItems().isEmpty());
   }
 }

@@ -77,6 +77,10 @@ public class Inventory {
     items.add(item);
   }
 
+  public void deleteItemById(Long id) {
+    items.removeIf(x -> x.getId().equals(id));
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) return true;

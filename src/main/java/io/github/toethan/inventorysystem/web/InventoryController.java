@@ -27,6 +27,18 @@ public class InventoryController {
   @Autowired
   private InventoryService inventoryService;
 
+  @ModelAttribute(name = "inventory")
+  public List<Inventory> inventories() {
+    return inventoryService.all();
+  }
+
+  // TODO: Investigate why new inventory isnt refreshed without the updateModel method.
+  @ModelAttribute(name = "newInventory")
+  public Inventory newInventory() {
+    return new Inventory();
+  }
+
+
   @GetMapping("/all")
   public String showAll(Model model) {
     updateModel(model);
@@ -36,7 +48,6 @@ public class InventoryController {
   @PostMapping("/new")
   public String processForm(Model model, @Valid @ModelAttribute("newInventory") Inventory inventory, Errors errors) {
     if (errors.hasErrors()) {
-      model.addAttribute("inventory", inventoryService.all());
       return INVENTORY_VIEW;
     }
 
@@ -66,7 +77,6 @@ public class InventoryController {
     }
 
     System.out.println(allRequestParams.keySet());
-    System.out.println(allRequestParams);
     System.out.println(allRequestParams.values());
     System.out.println(form.toString());
 
@@ -80,7 +90,6 @@ public class InventoryController {
               }
             });
 
-    model.addAttribute("inventory", inventoryService.all());
     return "redirect:/inventory/all";
   }
 

@@ -82,7 +82,7 @@ public class InventoryTest {
   public void deleteItemFromInventoryById() {
     List<Item> expected = new ArrayList<Item>();
     expected.add(new Item(0L,"1", "", 1, (double) 1.00));
-    expected.add(new Item(1L,"2", "", 1, (double) 1.00));
+    expected.add(new Item(2L,"3", "", 1, (double) 1.00));
 
     assertEquals(inventory.getItems().size(), 0);
     inventory.addItem(new Item(0L,"1", "", 1, (double) 1.00));

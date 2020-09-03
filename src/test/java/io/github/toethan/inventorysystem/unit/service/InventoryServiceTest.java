@@ -24,9 +24,11 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 public class InventoryServiceTest {
 
-  @Mock private InventoryRepository inventoryRepository;
+  @Mock
+  private InventoryRepository inventoryRepository;
 
-  @InjectMocks private InventoryService inventoryService;
+  @InjectMocks
+  private InventoryService inventoryService;
 
   @Before
   void init() {

@@ -32,7 +32,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebMvcTest(InventoryController.class)
 public class InventoryControllerTest {
 
-  @MockBean private InventoryService inventoryServiceMock;
+  @MockBean
+  private InventoryService inventoryServiceMock;
 
   private MockMvc mockMvc;
 

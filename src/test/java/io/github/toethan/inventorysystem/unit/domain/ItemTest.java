@@ -50,6 +50,6 @@ public class ItemTest {
     String expectedString = "$1.55 Apple (1)";
     Item apple = new Item("Apple", "", 1, 1.55);
 
-    Assert.assertEquals(apple.toString(), expectedString);
+    Assert.assertEquals(expectedString, apple.toString());
   }
 }

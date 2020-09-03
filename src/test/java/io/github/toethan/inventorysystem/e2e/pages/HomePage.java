@@ -10,14 +10,22 @@ import static org.openqa.selenium.support.ui.ExpectedConditions.presenceOfElemen
 
 @Component
 public class HomePage extends BasePage {
-  @Autowired private InventoryAdminPage inventoryAdminPage;
+  @Autowired private InventoryAdminPage inventoryAdmin;
+  @Autowired private ShoppingCartPage shoppingCart;
 
-  private By inventoryAdminPageButton = By.xpath("//*[@id=\"inventoryAdmin\"]");
+  private By inventoryAdminButton = By.xpath("//*[@id=\"inventoryAdmin\"]");
+  private By shoppingCartButton = By.xpath("//*[@id=\"shoppingCart\"]");
 
-  public InventoryAdminPage goToInventoryAdminPage() {
+  public InventoryAdminPage goToInventoryAdmin() {
     WebDriverWait wait = new WebDriverWait(driver, 10);
-    wait.until(presenceOfElementLocated(inventoryAdminPageButton)).click();
-    return inventoryAdminPage;
+    wait.until(presenceOfElementLocated(inventoryAdminButton)).click();
+    return inventoryAdmin;
+  }
+
+  public ShoppingCartPage goToShoppingCart() {
+    WebDriverWait wait = new WebDriverWait(driver, 10);
+    wait.until(presenceOfElementLocated(shoppingCartButton)).click();
+    return shoppingCart;
   }
 
   @Override
